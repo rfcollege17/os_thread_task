@@ -17,7 +17,7 @@ int main(void)
 void *helloThread(void *name)
 {
     pthread_t identifier = pthread_self();
-    printf("Olá, meu nome é %s e meu ID é %lu\n", (char *)name, identifier);
+    printf("Olá, meu nome é \e[33m%s\e[m e meu ID é \e[32m%lu\e[m\n", (char *)name, identifier);
     free(name);
     pthread_exit(NULL);
 }
@@ -35,11 +35,11 @@ void createThreads(int numberOfThreads)
     int error;
     for (int i = 0; i < numberOfThreads; i++)
     {
-        pthread_t currentThread;
+        pthread_t currentThread = 0L;
         error = pthread_create(&currentThread, NULL, helloThread, threadName(i));
         if (error)
         {
-            printf("Deu erro na criação de threads: %d", error);
+            printf("\e[31mDeu erro na criação de threads: %d\e[m\n", error);
             exit(1);
         }
     }

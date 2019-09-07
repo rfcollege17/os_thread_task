@@ -14,3 +14,10 @@ p1t2:
 	@ $(compiler) $(default_libs) src/parte1/tarefa2.c -o bin/p1t2.bin
 	@ echo "Executando:\n"
 	@ ./bin/p1t2.bin
+
+p2:
+	@ echo "Parte 2" 
+	@ echo "Compilando..."
+	@ $(compiler) $(default_libs) src/parte2/main.c -o bin/p2.bin
+	@ echo "Executando:\n"
+	@ ./bin/p2.bin

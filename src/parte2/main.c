@@ -5,7 +5,7 @@
 #include <stdbool.h>
 #include "../../header/parte2/teste.h"
 
-int tamanhoVetor = 1000;
+int tamanhoVetor = 100000;
 
 
 void printaVetor();
@@ -124,6 +124,8 @@ void retiraMultiplosDeCinco(){
 
 // recua uma casa com todos os elementos depois da posição do elemento a ser removido e diminui o tamanho do vetor
 void remFromVet(int *vet, int posBuraco){
+  if (posBuraco >= tamanhoVetor)
+    return;
   for (int i = posBuraco; i < tamanhoVetor - 1; i++)
   {
     vet[i] = vet[i+1];

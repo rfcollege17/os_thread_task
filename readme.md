@@ -36,7 +36,7 @@ Preencher-o com **números aleatórios** entre **1 e 100**
 - T1 remove números pares do vetor
 - T2 remove números múltiplos de 5 do vetor
 
-####Dicas
+#### Dicas
 
 - Remova do fim para o começo do vetor e mantenha a ordem original dos elementos
 - Teste o programa com e sem semáforos, observe o resultado e explique o que está acontecendo

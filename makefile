@@ -18,6 +18,6 @@ p1t2:
 p2:
 	@ echo "Parte 2" 
 	@ echo "Compilando..."
-	@ $(compiler) $(default_libs) src/parte2/main.c -o bin/p2.bin
+	@ $(compiler) $(default_libs) src/parte2/*.c -o bin/p2.bin
 	@ echo "Executando:\n"
 	@ ./bin/p2.bin

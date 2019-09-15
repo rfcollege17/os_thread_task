@@ -1,0 +1,1 @@
+int testaParte2(int *original, int tamOriginal, int *resposta, int tamResposta);

@@ -37,15 +37,3 @@ int testaParte2(int *original, int tamOriginal, int *resposta, int tamResposta)
         }
     return 1;
 }
-
-/*
-int main(void) {
-    int vet1[] = {1, 2, 3, 4, 5 };
-    int resp[] = {3, 1};
-
-    if (testaParte2(vet1, 5, resp, 2))
-        printf("Deu bom!\n");
-    else
-        printf("Deu ruim\n");
-}
-*/

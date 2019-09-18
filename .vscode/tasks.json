@@ -13,6 +13,14 @@
             "options": {
                 "cwd": "/usr/bin"
             }
+        },
+        {
+            "type": "shell",
+            "label": "make atual",
+            "command": "make",
+            "args": [
+                "build_${fileBasenameNoExtension}"
+            ]
         }
     ],
     "version": "2.0.0"

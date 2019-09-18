@@ -4,74 +4,51 @@
 #include <semaphore.h>
 #include <stdbool.h>
 #include "../../header/parte2/teste.h"
+#include "../../lib/vet/vet.h"
+
+//#define isPair(n) !(n % 2)
 
 int tamanhoVetor = 100000;
 
-
-void printaVetor();
-void inicializaVetor(int * vet, int tamanho);
-void criaThreads(int tamanho);
-void retiraPares();
-void remFromVet(int *vet, int posBuraco);
-void retiraMultiplosDeCinco();
+void criaThreads();
 char *threadName(int threadNumber);
+void retiraPares();
+void retiraMultiplosDeCinco();
 
-int *randomNumbers;
-sem_t *semaforo;
+Vet *randomNumbers;
+sem_t semaforo;
 
 void main(){
-  semaforo = (sem_t *) malloc(sizeof(sem_t));
-  randomNumbers = (int *) malloc(sizeof(int) * tamanhoVetor);
+  sem_init(&semaforo, 0, 1);
 
-  sem_init(semaforo, 0, 1);
-  inicializaVetor(randomNumbers, tamanhoVetor);
-  int original[tamanhoVetor];
-  int tamOriginal = tamanhoVetor;
+  printf("Por favor, digite o tamanho do vetor aleatório: ");
+  int tam;
+  scanf("%d", &tam);
 
-  for (int i = 0; i < tamanhoVetor; i++)
-  {
-    original[i] = randomNumbers[i];
-  }
+  randomNumbers = Vet_init(tam);
+  randomNumbers->size = tam;
+  Vet_put_random(randomNumbers);
+  Vet *original = Vet_clone(randomNumbers);
   
   printf("\e[33mEsse é o vetor original\e[m\n");
-  printaVetor();
+  Vet_print(original);
 
-  criaThreads(tamanhoVetor);
+  criaThreads();
 
   printf("\n\e[33mEsse é o vetor modificado\e[m\n");
-  printaVetor();
+  Vet_print(randomNumbers);
 
-  if (testaParte2(original, tamOriginal, randomNumbers, tamanhoVetor))
+  if (testaParte2(original, randomNumbers))
     printf("\e[5;32mPassou nos testes\e[m\n");
   else
     printf("\e[31mFalho nos testes...\e[m\n");
 
-  free(randomNumbers);
-  free(semaforo);
+  Vet_free(randomNumbers);
   pthread_exit(NULL);
 }
 
-// printa o vetor no estado atual
-void printaVetor(){
-  printf("\n");
-  for (int i = 0; i < tamanhoVetor; i++)
-  {
-    printf("%i,",randomNumbers[i]);
-  }
-  printf("\n\n");
-}
-
-// inicializa elementos do vetor com numeros aleatorios entre 1 e 100
-void inicializaVetor(int * vet, int tamanho){
-  for (int i = 0; i < tamanho; i++)
-  {
-    int randomNum = rand() % 100;
-    vet[i] = randomNum;
-  }
-}
-
 // gera as 2 threads dizendo oque cada uma vai fazer
-void criaThreads(int tamanho){
+void criaThreads(){
   int errorCode;
   void * callback;
   pthread_t threads[2];
@@ -79,7 +56,7 @@ void criaThreads(int tamanho){
   {
     callback = (i % 2 == 0) ? retiraPares : retiraMultiplosDeCinco;
     pthread_t currentThread = 0L;
-    errorCode = pthread_create(&currentThread, NULL, callback, threadName(i));
+    errorCode = pthread_create(&currentThread, NULL, callback, NULL);
 
     if (errorCode)
     {
@@ -96,41 +73,30 @@ void criaThreads(int tamanho){
 
 // retira numeros pares de trás pra frente do vetor
 void retiraPares(){
-  for (int i = tamanhoVetor - 1; i >= 0; i--)
+  for (int i = randomNumbers->size - 1; i >= 0; i--)
   {
-    sem_wait(semaforo);
-    if(!(randomNumbers[i]%2)){
-      printf("thread dos pares remove: %i\n", randomNumbers[i]);
-      remFromVet(randomNumbers, i);
+    sem_wait(&semaforo);
+    if(!(randomNumbers->data[i]%2)){
+      printf("thread dos pares remove: %i\n", randomNumbers->data[i]);
+      Vet_remove(randomNumbers, i);
     }
-    sem_post(semaforo);
+    sem_post(&semaforo);
   }
   pthread_exit(NULL);
 }
 
 // retira numeros multiplos de 5 de trás pra frente do vetor  
 void retiraMultiplosDeCinco(){
-  for (int i = tamanhoVetor - 1; i >= 0; i--)
+  for (int i = randomNumbers->size - 1; i >= 0; i--)
   {
-    sem_wait(semaforo);
-    if(!(randomNumbers[i] % 5)){
-      printf("thread dos multiplos de 5 remove %i\n", randomNumbers[i]);
-      remFromVet(randomNumbers, i);
+    sem_wait(&semaforo);
+    if(!(randomNumbers->data[i] % 5)){
+      printf("thread dos multiplos de 5 remove %i\n", randomNumbers->data[i]);
+      Vet_remove(randomNumbers, i);
     }
-    sem_post(semaforo);
+    sem_post(&semaforo);
   }
   pthread_exit(NULL);
-}
-
-// recua uma casa com todos os elementos depois da posição do elemento a ser removido e diminui o tamanho do vetor
-void remFromVet(int *vet, int posBuraco){
-  if (posBuraco >= tamanhoVetor)
-    return;
-  for (int i = posBuraco; i < tamanhoVetor - 1; i++)
-  {
-    vet[i] = vet[i+1];
-  }
-  tamanhoVetor--;
 }
 
 // diz qual thread é referenciada pelo numero passado

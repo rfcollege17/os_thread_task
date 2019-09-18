@@ -1,4 +1,4 @@
-#include "../../header/vet.h"
+#include "vet.h"
 
 
 Vet *Vet_init(int capacity)

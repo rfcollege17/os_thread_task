@@ -1,6 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+
+#ifndef VETH
+#define VETH
 typedef struct {
     int *data;
     int size;
@@ -18,3 +21,5 @@ Vet *Vet_clone(Vet *original);
 void Vet_remove_pairs(Vet *vet);
 void Vet_remove_multiples_five(Vet *vet);
 void Vet_remove(Vet *vet, int position);
+
+#endif

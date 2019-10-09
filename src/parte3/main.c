@@ -86,7 +86,7 @@ int main(void)
   }
 }
 
-// Birfucacao de Processos
+// Bifurcacao de Processos
 // pid_t child_process = fork();
 
 // switch (child_process)

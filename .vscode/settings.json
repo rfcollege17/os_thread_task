@@ -6,7 +6,8 @@
     "stdlib.h": "c",
     "types.h": "c",
     "typeinfo": "c",
-    "semaphore.h": "c"
+    "semaphore.h": "c",
+    "sem.h": "c"
   },
   "C_Cpp.errorSquiggles": "Disabled"
 }

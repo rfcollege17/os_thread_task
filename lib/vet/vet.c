@@ -1,74 +1,62 @@
 #include "vet.h"
 
-
-Vet *Vet_init(int capacity)
+int *Vet_init(int tam)
 {
-    Vet *new = (Vet *) malloc(sizeof(Vet));
-    new->capacity = capacity;
-    new->size = 0;
-    new->data = (int *) malloc(sizeof(int) * capacity);
-    return new;
-}
-
-void Vet_free(Vet *vet)
-{
-    free(vet->data);
-    free(vet);
+  return malloc(sizeof(int) * tam);
 }
 
 // Shows the vet
-void Vet_print(Vet *vet)
+void Vet_print(int *vet, int tam)
 {
-    printf("\n");
-    for (int i = 0; i < vet->size; i++)
-        printf("%d, ", vet->data[i]);
-    printf("\n\n");
+  printf("\n");
+  for (int i = 0; i < tam; i++)
+    printf("%d, ", vet[i]);
+  printf("\n\n");
 }
 
 // Fulfils the given vet with random numbers
-void Vet_put_random(Vet *vet)
+void Vet_put_random(int *vet, int tam)
 {
-    for (int i = 0; i < vet->size; i++)
-    {
-        vet->data[i] = rand() % 100;
-    }
+  for (int i = 0; i < tam; i++)
+  {
+    vet[i] = rand() % 100;
+  }
 }
 
-Vet *Vet_clone(Vet *original)
+int *Vet_clone(int *original, int tam)
 {
-    Vet *clone  = Vet_init(original->capacity);
-    for (int i = 0; i < original->size; i++)
-        clone->data[i] = original->data[i];
-    clone->size = original->size;
-    return clone;
+  int *clone = Vet_init(tam);
+  for (int i = 0; i < tam; i++)
+    clone[i] = original[i];
+  return clone;
 }
 
-void Vet_remove(Vet *vet, int position)
+void Vet_remove(int *vet, int *tam, int position)
 {
-    if (!vet || position >= vet->size)
-        return;
+  if (!vet || position >= *tam)
+    return;
 
-    for (int i = position; i < vet->size - 1; i++)
-    {
-        vet->data[i] = vet->data[i + 1];
-    }
-    vet->size--;
+  for (int i = position; i < *tam - 1; i++)
+  {
+    vet[i] = vet[i + 1];
+  }
+  (*tam)--;
 }
 
-static void Vet_remove_multiples(Vet *vet, int divisor)
+static void Vet_remove_multiples(int *vet, int tam, int divisor)
 {
-    for (int i = vet->size - 1; i >= 0; i--)
-        if ((!(vet->data[i] % divisor)))
-            Vet_remove(vet, i);
+  for (int i = tam - 1; i >= 0; i--)
+    if ((!(vet[i] % divisor)))
+      Vet_remove(vet, &tam, i);
 }
 
 // Removes even elements from vet and reduces its size accordingly
-void Vet_remove_pairs(Vet *vet)
+void Vet_remove_pairs(int *vet, int tam)
 {
-    Vet_remove_multiples(vet, 2);
+  Vet_remove_multiples(vet, tam, 2);
 }
 
-void Vet_remove_multiples_five(Vet *vet)
+void Vet_remove_multiples_five(int *vet, int tam)
 {
-    Vet_remove_multiples(vet, 5);
+  Vet_remove_multiples(vet, tam, 5);
 }

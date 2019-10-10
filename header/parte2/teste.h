@@ -1,3 +1,3 @@
 #include "../../lib/vet/vet.h"
 
-int testaParte2(Vet *original, Vet *resposta);
+int testaParte2(int *original, int tamOriginal, int *resposta, int tamResposta);

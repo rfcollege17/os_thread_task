@@ -17,6 +17,7 @@ void Vet_print(int *vet, int tam)
 // Fulfils the given vet with random numbers
 void Vet_put_random(int *vet, int tam)
 {
+  printf("Oi\n");
   for (int i = 0; i < tam; i++)
   {
     vet[i] = rand() % 100;
@@ -43,20 +44,20 @@ void Vet_remove(int *vet, int *tam, int position)
   (*tam)--;
 }
 
-static void Vet_remove_multiples(int *vet, int tam, int divisor)
+static void Vet_remove_multiples(int *vet, int *tam, int divisor)
 {
-  for (int i = tam - 1; i >= 0; i--)
+  for (int i = (*tam) - 1; i >= 0; i--)
     if ((!(vet[i] % divisor)))
-      Vet_remove(vet, &tam, i);
+      Vet_remove(vet, tam, i);
 }
 
 // Removes even elements from vet and reduces its size accordingly
-void Vet_remove_pairs(int *vet, int tam)
+void Vet_remove_pairs(int *vet, int *tam)
 {
   Vet_remove_multiples(vet, tam, 2);
 }
 
-void Vet_remove_multiples_five(int *vet, int tam)
+void Vet_remove_multiples_five(int *vet, int *tam)
 {
   Vet_remove_multiples(vet, tam, 5);
 }

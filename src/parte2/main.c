@@ -11,43 +11,45 @@ char *threadName(int threadNumber);
 void retiraPares();
 void retiraMultiplosDeCinco();
 
-Vet *randomNumbers;
+int *randomNumbers;
+int tam;
 sem_t semaforo;
 
-void main(){
+void main()
+{
   sem_init(&semaforo, 0, 1);
 
   printf("Por favor, digite o tamanho do vetor aleatório: ");
-  int tam;
   scanf("%d", &tam);
 
   randomNumbers = Vet_init(tam);
-  randomNumbers->size = tam;
-  Vet_put_random(randomNumbers);
+  Vet_put_random(randomNumbers, tam);
 
-  Vet *original = Vet_clone(randomNumbers);
-  
+  int *original = Vet_clone(randomNumbers, tam);
+  int tamOriginal = tam;
+
   printf("\e[33mEsse é o vetor original\e[m\n");
-  Vet_print(randomNumbers);
+  Vet_print(randomNumbers, tam);
 
   criaThreads();
 
   printf("\n\e[33mEsse é o vetor modificado\e[m\n");
-  Vet_print(randomNumbers);
+  Vet_print(randomNumbers, tam);
 
-  if (testaParte2(original, randomNumbers))
+  if (testaParte2(original, tamOriginal, randomNumbers, tam))
     printf("\e[5;32mPassou nos testes\e[m\n");
   else
     printf("\e[31mFalho nos testes...\e[m\n");
 
-  Vet_free(randomNumbers);
+  free(randomNumbers);
   pthread_exit(NULL);
 }
 
 // gera as 2 threads dizendo oque cada uma vai fazer
-void criaThreads(){
+void criaThreads()
+{
   int errorCode;
-  void * callback;
+  void *callback;
   pthread_t threads[2];
   for (int i = 0; i < 2; i++)
   {
@@ -57,8 +59,8 @@ void criaThreads(){
 
     if (errorCode)
     {
-        printf("\e[31mErro %d na criação da %s\e[m\n", errorCode, threadName(i));
-        exit(1);
+      printf("\e[31mErro %d na criação da %s\e[m\n", errorCode, threadName(i));
+      exit(1);
     }
 
     threads[i] = currentThread;
@@ -69,27 +71,31 @@ void criaThreads(){
 }
 
 // retira numeros pares de trás pra frente do vetor
-void retiraPares(){
-  for (int i = randomNumbers->size - 1; i >= 0; i--)
+void retiraPares()
+{
+  for (int i = tam - 1; i >= 0; i--)
   {
     sem_wait(&semaforo);
-    if(!(randomNumbers->data[i]%2)){
-      printf("thread dos pares remove: %i\n", randomNumbers->data[i]);
-      Vet_remove(randomNumbers, i);
+    if (!(randomNumbers[i] % 2))
+    {
+      printf("thread dos pares remove: %i\n", randomNumbers[i]);
+      Vet_remove(randomNumbers, &tam, i);
     }
     sem_post(&semaforo);
   }
   pthread_exit(NULL);
 }
 
-// retira numeros multiplos de 5 de trás pra frente do vetor  
-void retiraMultiplosDeCinco(){
-  for (int i = randomNumbers->size - 1; i >= 0; i--)
+// retira numeros multiplos de 5 de trás pra frente do vetor
+void retiraMultiplosDeCinco()
+{
+  for (int i = tam - 1; i >= 0; i--)
   {
     sem_wait(&semaforo);
-    if(!(randomNumbers->data[i] % 5)){
-      printf("thread dos multiplos de 5 remove %i\n", randomNumbers->data[i]);
-      Vet_remove(randomNumbers, i);
+    if (!(randomNumbers[i] % 5))
+    {
+      printf("thread dos multiplos de 5 remove %i\n", randomNumbers[i]);
+      Vet_remove(randomNumbers, &tam, i);
     }
     sem_post(&semaforo);
   }

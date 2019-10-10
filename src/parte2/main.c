@@ -6,10 +6,6 @@
 #include "../../header/parte2/teste.h"
 #include "../../lib/vet/vet.h"
 
-//#define isPair(n) !(n % 2)
-
-int tamanhoVetor = 100000;
-
 void criaThreads();
 char *threadName(int threadNumber);
 void retiraPares();
@@ -28,10 +24,11 @@ void main(){
   randomNumbers = Vet_init(tam);
   randomNumbers->size = tam;
   Vet_put_random(randomNumbers);
+
   Vet *original = Vet_clone(randomNumbers);
   
   printf("\e[33mEsse é o vetor original\e[m\n");
-  Vet_print(original);
+  Vet_print(randomNumbers);
 
   criaThreads();
 

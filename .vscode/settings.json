@@ -7,7 +7,9 @@
     "types.h": "c",
     "typeinfo": "c",
     "semaphore.h": "c",
-    "sem.h": "c"
+    "sem.h": "c",
+    "vet.h": "c",
+    "shm.h": "c"
   },
   "C_Cpp.errorSquiggles": "Disabled"
 }

@@ -21,3 +21,10 @@ p2:
 	@ $(compiler) $(default_libs) lib/vet/vet.c src/parte2/*.c -o bin/p2.bin
 	@ echo "Executando:\n"
 	@ ./bin/p2.bin
+
+p3:
+	@ echo "Parte 3" 
+	@ echo "Compilando..."
+	@ $(compiler) $(default_libs) lib/vet/vet.c src/parte3/*.c -o bin/p3.bin
+	@ echo "Executando:\n"
+	@ ./bin/p3.bin

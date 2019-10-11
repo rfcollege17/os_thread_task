@@ -4,6 +4,7 @@
 #ifndef VETH
 #define VETH
 
+
 int *Vet_init(int tam);
 // Shows the vet
 void Vet_print(int *vet, int tam);

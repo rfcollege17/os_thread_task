@@ -17,7 +17,6 @@ void Vet_print(int *vet, int tam)
 // Fulfils the given vet with random numbers
 void Vet_put_random(int *vet, int tam)
 {
-  printf("Oi\n");
   for (int i = 0; i < tam; i++)
   {
     vet[i] = rand() % 100;

@@ -1,5 +1,5 @@
 compiler = gcc
-default_libs = -pthread -g -O2
+default_libs = -pthread -g
 
 p1t1:
 	@ echo "Parte 1 - Tarefa 1"
@@ -25,6 +25,6 @@ p2:
 p3:
 	@ echo "Parte 3" 
 	@ echo "Compilando..."
-	@ $(compiler) $(default_libs) lib/vet/vet.c src/parte3/*.c -o bin/p3.bin
+	@ $(compiler) $(default_libs) lib/vet/vet.c src/parte3/*.c src/teste.c -o bin/p3.bin
 	@ echo "Executando:\n"
 	@ ./bin/p3.bin

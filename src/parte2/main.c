@@ -3,7 +3,7 @@
 #include <pthread.h>
 #include <semaphore.h>
 #include <stdbool.h>
-#include "../../header/parte2/teste.h"
+#include "../../header/teste.h"
 #include "../../lib/vet/vet.h"
 
 void criaThreads();
@@ -36,7 +36,7 @@ void main()
   printf("\n\e[33mEsse é o vetor modificado\e[m\n");
   Vet_print(randomNumbers, tam);
 
-  if (testaParte2(original, tamOriginal, randomNumbers, tam))
+  if (testaRemocaoParalela(original, tamOriginal, randomNumbers, tam))
     printf("\e[5;32mPassou nos testes\e[m\n");
   else
     printf("\e[31mFalho nos testes...\e[m\n");

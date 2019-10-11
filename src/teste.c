@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../../lib/vet/vet.h"
+#include "../lib/vet/vet.h"
 
-int testaParte2(int *original, int tamOriginal, int *resposta, int tamResposta)
+int testaRemocaoParalela(int *original, int tamOriginal, int *resposta, int tamResposta)
 {
   int *gabarito = Vet_clone(original, tamOriginal);
   int tamGabarito = tamOriginal;
